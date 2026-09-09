@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用与安全说明
+    url: https://github.com/qinsss/windows-c-clear#安全设计
+    about: 提交问题前请先阅读安全边界和常见问题。

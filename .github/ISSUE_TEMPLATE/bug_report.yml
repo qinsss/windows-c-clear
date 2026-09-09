@@ -1,0 +1,53 @@
+name: Bug 报告
+description: 报告扫描、界面、打包或清理行为异常
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: 请先隐藏截图和日志中的用户名、账号及其他隐私信息。
+  - type: input
+    id: version
+    attributes:
+      label: 软件版本
+      placeholder: 例如 v1.0.0
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows 版本
+      placeholder: 例如 Windows 11 24H2
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: 涉及功能
+      options:
+        - 快速扫描
+        - AppData 精确扫描
+        - 勾选与删除
+        - Windows 系统清理项
+        - 启动或打包
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 请说明操作顺序；不要粘贴包含个人信息的完整路径。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为与实际行为
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: 补充信息
+      description: 可附经过脱敏的截图或错误信息。
