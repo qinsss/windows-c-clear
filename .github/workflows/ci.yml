@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run smoke tests
+        shell: powershell
+        run: .\tests\Smoke.Tests.ps1
+
+      - name: Build portable app
+        shell: powershell
+        run: .\build-portable.ps1
+
+      - name: Verify portable app
+        shell: powershell
+        run: '& ".\dist\C盘清理助手.exe" -SmokeTest'

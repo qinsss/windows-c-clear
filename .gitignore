@@ -1,0 +1,10 @@
+# 本地构建产物
+dist/
+.portable-build/
+
+# 临时文件与编辑器配置
+*.tmp
+*.log
+*.user
+.vs/
+.vscode/
