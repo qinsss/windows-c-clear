@@ -25,12 +25,18 @@ jobs:
 
       - name: Verify portable app
         shell: powershell
-        run: '& ".\dist\C盘清理助手.exe" -SmokeTest'
+        run: |
+          $app = Get-ChildItem -LiteralPath '.\dist' -Filter '*.exe' | Select-Object -First 1
+          if (-not $app) { throw 'Portable executable was not generated.' }
+          $process = Start-Process -FilePath $app.FullName -ArgumentList '-SmokeTest' -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Portable smoke test failed: $($process.ExitCode)" }
 
       - name: Prepare release assets
         shell: powershell
         run: |
-          Copy-Item -LiteralPath '.\dist\C盘清理助手.exe' -Destination '.\dist\WindowsCClear-Portable.exe'
+          $app = Get-ChildItem -LiteralPath '.\dist' -Filter '*.exe' | Select-Object -First 1
+          if (-not $app) { throw 'Portable executable was not generated.' }
+          Copy-Item -LiteralPath $app.FullName -Destination '.\dist\WindowsCClear-Portable.exe'
           (Get-FileHash -Algorithm SHA256 -LiteralPath '.\dist\WindowsCClear-Portable.exe').Hash.ToLowerInvariant() + '  WindowsCClear-Portable.exe' |
             Set-Content -LiteralPath '.\dist\SHA256SUMS.txt' -Encoding ascii
 
@@ -40,9 +46,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create $env:GITHUB_REF_NAME `
-            '.\dist\WindowsCClear-Portable.exe#C盘清理助手（免安装）.exe' `
-            '.\dist\SHA256SUMS.txt#SHA256SUMS.txt' `
+            '.\dist\WindowsCClear-Portable.exe' `
+            '.\dist\SHA256SUMS.txt' `
             --repo $env:GITHUB_REPOSITORY `
-            --title "C盘清理助手 $env:GITHUB_REF_NAME" `
+            --title "Windows C Clear $env:GITHUB_REF_NAME" `
             --generate-notes `
             --verify-tag

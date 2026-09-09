@@ -30,7 +30,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\src\WindowsCClear.ps1
 
 ## 免安装版本
 
-普通用户建议直接从 [Releases](https://github.com/qinsss/windows-c-clear/releases) 下载 `WindowsCClear-Portable.exe`（发布页显示为“C盘清理助手（免安装）”），双击即可使用，无需安装。
+普通用户建议直接从 [Releases](https://github.com/qinsss/windows-c-clear/releases) 下载 `WindowsCClear-Portable.exe`，双击即可使用，无需安装。程序窗口和文件属性中的产品名称仍为“C盘清理助手”。
 
 程序目前没有商业代码签名证书。Windows 首次运行时可能显示 SmartScreen 提示；请确认下载地址为本仓库，并可使用 Release 附带的 `SHA256SUMS.txt` 校验文件完整性。
 

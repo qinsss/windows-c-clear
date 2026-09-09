@@ -23,4 +23,8 @@ jobs:
 
       - name: Verify portable app
         shell: powershell
-        run: '& ".\dist\C盘清理助手.exe" -SmokeTest'
+        run: |
+          $app = Get-ChildItem -LiteralPath '.\dist' -Filter '*.exe' | Select-Object -First 1
+          if (-not $app) { throw 'Portable executable was not generated.' }
+          $process = Start-Process -FilePath $app.FullName -ArgumentList '-SmokeTest' -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Portable smoke test failed: $($process.ExitCode)" }
